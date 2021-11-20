@@ -1,0 +1,118 @@
+.board {
+    width: 100vw;
+    height: 80vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: 100px 100px 100px;
+}
+
+:root{
+    --cell-size: 100px
+}
+.cell{
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor:pointer;
+}
+
+.cell.x, .cell.o{
+    cursor: default;
+}
+.cell:nth-child(-n+3){
+    border-top: none;
+}
+
+.cell:nth-child(3n+1){
+    border-left: none;
+}
+.cell:nth-child(3n+3){
+    border-right: none;
+}
+
+.cell:nth-child(+n+3){
+    border-bottom: none;
+}
+
+.cell.x::before, .cell.x::after,.board.x .cell:not(.x):not(.o):before, .board.x .cell:not(.x):not(.o):hover::after{
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 70px;
+}
+
+.cell.x::before, .board.x .cell:not(.x):not(.o):hover::before{
+    transform: rotate(45deg);
+}
+
+.cell.x::after, .board.x .cell:not(.x):not(.o):hover::after{
+    transform: rotate(-45deg);
+}
+
+.cell.o::before, .cell.o::after, .board.o .cell:not(.x):not(.o):hover::after, .board.o .cell:not(.x):not(.o):hover::before{
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.o::before, .board.o .cell:not(.x):not(.o):hover::before{
+    width: 70px;
+    height: 70px;
+}
+
+.cell.o::after, .board.o .cell:not(.x):not(.o):hover::after{
+    width: 50px;
+    height: 50px;
+    background-color: white;
+}
+
+.cell.x::before, .cell.x::after{
+    background-color: tomato;
+}
+
+.board.x .cell:not(.x):not(.o):hover::after,
+.board.x .cell:not(.x):not(.o):hover::before {
+    background-color: rgb(255, 183, 170);
+}
+
+.cell.o::before{
+    background-color: rgb(2, 133, 2);
+}
+.board.o .cell:not(.x):not(.o):hover::before {
+    background-color: rgb(179, 236, 179);
+}
+
+.result{
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    right: 30%;
+    bottom: 20%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-size: 3rem;
+}
+
+.result button{
+    font-size: 2rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+}
+
+.result button:hover{
+    background-color: lightgray;
+}
+
+.result.show{
+    display: flex;
+}
