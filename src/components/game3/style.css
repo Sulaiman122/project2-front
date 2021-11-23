@@ -1,0 +1,81 @@
+ /* .game3 {
+    background-color: #232323;
+    margin: 0;
+    font-family: "Verdana", "Corbel";
+} */
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.square {
+    width: 30%;
+    padding-bottom: 30%;
+    float: left;
+    margin: 1.66%;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: background 0.3s;
+}
+/*
+.game3 h1 {
+    color: white;
+    text-align: center;
+    background-color: steelblue;
+    margin: 0;
+    padding: 40px 0;
+    font-weight: normal;
+}
+
+#stripe{
+    background: white;
+    height: 30px;
+    text-align: center;
+}
+
+.game3 button{
+    border: none;
+    height: 100%;
+    background-color: white;
+    color: steelblue;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: inherit;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    outline: none;
+}
+
+.game3 button:hover{
+    color: white;
+    background-color: steelblue;
+    cursor: pointer;
+}
+
+
+
+
+.selected{
+    background-color: steelblue;
+    color: white;
+}
+
+#colorDisplay{
+    text-transform: uppercase;
+    display: block;
+    margin: 5px 0;
+    font-size: 170%;
+}
+
+#message{
+    display: inline-block;
+    width: 20%;
+} */
+
+.hide{
+    display: none;
+}
