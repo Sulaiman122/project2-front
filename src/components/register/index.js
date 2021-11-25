@@ -17,9 +17,9 @@ const Register = () => {
         })
         .then((response) => {
           console.log(response.data);
-          if (response.data._id) {
+          if (response.data) {
             console.log("registered successfully");
-            localStorage.setItem("User", response.data);
+            localStorage.setItem("User", JSON.stringify(response.data));
             navigate("/");
           }
         });
@@ -38,9 +38,9 @@ const Register = () => {
         })
         .then((response) => {
           console.log(response.data);
-          if (response.data.userID) {
+          if (response.data) {
             console.log("login successfully");
-            localStorage.setItem("User", response.data);
+            localStorage.setItem("User", JSON.stringify(response.data));
             navigate("/"); 
           }
         });

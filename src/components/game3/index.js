@@ -69,15 +69,16 @@ const Game3 = () => {
   const restart = () => {
     window.location.reload();
   };
-  // const [seconds, setseconds] = useState(62);
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setseconds(seconds - 1);
-  //   }, 1000);
-  //   if (seconds == 0) {
-  //     setseconds(0);
-  //   }
-  // }, [seconds]);
+
+  const [seconds, setseconds] = useState(62);
+  useEffect(() => {
+    setTimeout(() => {
+      setseconds(seconds - 1);
+    }, 1000);
+    if (seconds == 0) {
+      setseconds(0);
+    }
+  }, [seconds]);
 
   const [show, setshow] = useState();
   const [show3, setshow3] = useState("hide");
@@ -85,7 +86,7 @@ const Game3 = () => {
   return (
     <div className="game3" ref={cont}>
       <div className={`page2 ${show2}`}>
-        {/* {seconds} */}
+        {seconds}
 
         <h1>
           The Great Game

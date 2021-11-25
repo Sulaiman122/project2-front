@@ -1,10 +1,28 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
+import axios from "axios";
+import Countdown from "react-countdown";
 
 const Game1 = () => {
+  const [resultMessage, setResultMessage] = useState("");
+  const [show, setShow] = useState("");
+  const [hide, setHide] = useState("show");
+
+  const setScore = async (passedScore, em) => {
+    try {
+      const resp = await axios.post("http://localhost:4500/setscore", {
+        email: em,
+        score: passedScore,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const canvasRef = useRef(null);
   const [canvas, setcanvas] = useState();
+  let timer;
   useEffect(() => {
     setcanvas(canvasRef.current);
   }, []);
@@ -41,17 +59,22 @@ const Game1 = () => {
         for (var x = 0; x < board[y].length; x++) {
           //Draw a wall
           if (board[y][x] === 1) {
-            context.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
+            context.fillRect(
+              x * blockSize,
+              y * blockSize,
+              blockSize,
+              blockSize
+            );
           }
           //Draw the goal
           else if (board[y][x] === -1) {
             context.beginPath();
             context.lineWidth = 3;
             context.strokeStyle = "gold";
-            context.moveTo(x * blockSize+8, y * blockSize+8);
-            context.lineTo((x + 1) * blockSize-8, (y + 1) * blockSize-8);
-            context.moveTo(x * blockSize+8, (y + 1) * blockSize-8);
-            context.lineTo((x + 1) * blockSize-8, y * blockSize+8);
+            context.moveTo(x * blockSize + 8, y * blockSize + 8);
+            context.lineTo((x + 1) * blockSize - 8, (y + 1) * blockSize - 8);
+            context.moveTo(x * blockSize + 8, (y + 1) * blockSize - 8);
+            context.lineTo((x + 1) * blockSize - 8, y * blockSize + 8);
             context.stroke();
           }
         }
@@ -63,7 +86,7 @@ const Game1 = () => {
       context.arc(
         player.x * blockSize + half,
         player.y * blockSize + half,
-        half-4,
+        half - 4,
         0,
         2 * Math.PI
       );
@@ -71,11 +94,17 @@ const Game1 = () => {
     } else {
       console.log("didnt render");
     }
-    if(player.x==0&&player.y==9){
-        alert('you won')
+    if (player.x == 0 && player.y == 9) {
+      console.log("won");
+      let myuser = JSON.parse(localStorage.getItem("User"));
+      myuser.score.splice(0, 1, timer / 2);
+      console.log(myuser.score);
+      setScore(myuser.score, myuser.email);
     }
   }
-
+useEffect(() => {
+  
+}, [])
   //Check to see if the new space is inside the board and not a wall
   function canMove(x, y) {
     return (
@@ -101,17 +130,34 @@ const Game1 = () => {
   }
 
   draw();
+  
+  const restart = () => {
+    window.location.reload();
+  };
+
+  const renderer = ({ seconds, completed }) => {
+    timer = seconds;
+    return <span>{seconds}</span>;
+  };
+
   return (
-    <div onKeyDown={handleKeyDown} tabIndex="0" className="game1">
-      <canvas
-        ref={canvasRef}
-        id="GameBoardCanvas"
-        width="400px"
-        height="400px"
-      ></canvas>
-      <Link to="/">
-        <button>Go Home</button>
-      </Link>
+    <div>
+      <div onKeyDown={handleKeyDown} tabIndex="0" className="game1 ">
+        <Countdown date={Date.now() + 40000} renderer={renderer}></Countdown>
+        <canvas
+          ref={canvasRef}
+          id="GameBoardCanvas"
+          width="400px"
+          height="400px"
+        ></canvas>
+        <Link to="/">
+          <button>Go Home</button>
+        </Link>
+      </div>
+      <div className="ResultGame1">
+        <div className="resultTextGame1">{resultMessage}</div>
+        <button onClick={restart}>Restart</button>
+      </div>
     </div>
   );
 };

@@ -2,11 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 import Countdown from "react-countdown";
+import axios from "axios";
 
 const Game2 = () => {
   const board = useRef(null);
   let turn;
+  let timer;
   const [resultMessage, setResultMessage] = useState("");
+  const [scoreGame2, setScoreGame2] = useState("");
   const [show, setShow] = useState("");
   let end = false;
   const winLines = [
@@ -20,6 +23,18 @@ const Game2 = () => {
     [2, 4, 6],
   ];
   let imagination = ["", "", "", "", "", "", "", "", ""];
+
+
+  const setScore = async (passedScore, em) => {
+    try {
+      const resp = await axios.post("http://localhost:4500/setscore", {
+        email: em,
+        score: passedScore,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const ComputerPlay = () => {
     const divs = board.current.childNodes;
@@ -65,18 +80,28 @@ const Game2 = () => {
         });
       })
     ) {
+      let myuser = JSON.parse(localStorage.getItem("User"));
+      myuser.score.splice(1, 1, timer * 6);
       if (currentTurn == "x") {
+        // setScoreGame2(myuser.score[1]);
         setResultMessage("You Win!");
         setShow("show");
         end = true;
+        setScore(myuser.score, myuser.email);
       } else if (currentTurn == "o") {
+        // setScoreGame2(myuser.score[1]);
         setResultMessage("Computer Win");
         setShow("show");
       }
     } else if (draw) {
+      // setScoreGame2(myuser.score[1]);
       setResultMessage("Draw");
       setShow("show");
       end = true;
+      let myuser = JSON.parse(localStorage.getItem("User"));
+
+      myuser.score.splice(1, 1, 1);
+      setScore(myuser.score, myuser.email);
     } else {
       return true;
     }
@@ -105,6 +130,7 @@ const Game2 = () => {
 
   const Completionist = () => {
     if (!show) {
+      setScoreGame2(timer * 4);
       setResultMessage("Lost by time");
       setShow("show");
     }
@@ -112,7 +138,8 @@ const Game2 = () => {
   };
 
   const renderer = ({ seconds, completed }) => {
-    if (show) {
+    timer = seconds;
+    if (seconds == 0) {
       return <Completionist />;
     } else {
       return <span>0{seconds}</span>;
@@ -180,6 +207,7 @@ const Game2 = () => {
       </div>
       <div className={`result ${show}`}>
         <div className="text">{resultMessage}</div>
+        <div className="text">{scoreGame2}</div>
         <button onClick={restart}>Restart</button>
       </div>
       <Link to="/">

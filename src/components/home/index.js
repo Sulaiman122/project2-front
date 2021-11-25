@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 const Home = () => {
-  let navigate = useNavigate();
 
   const [hide, sethide] = useState("hide");
   const [show, setshow] = useState("");
@@ -18,13 +17,6 @@ const Home = () => {
     sethide("hide");
   };
 
-  const nav = (path) => {
-    if (localStorage.getItem("User")) {
-      navigate(path);
-    } else {
-      alert("you have to log in first");
-    }
-  };
   return (
     <div className="home">
       <div className="header">
@@ -54,13 +46,8 @@ const Home = () => {
           The Most Popular WordPress Themes In The World And The Ultimate Visual
           Page
         </p>
-        <button id="browse">Browse Games</button>
+        <Link to="/games"><button id="browse">Browse Games</button></Link>
       </div>
-
-      {/* <button onClick={() => nav("/game_one")}>Game 1</button>
-      <button onClick={() => nav("/game_two")}>Game 2</button>
-      <button onClick={() => nav("/game_three")}>Game 3</button>
-      <button onClick={() => nav("/game_four")}>Game 4</button> */}
     </div>
   );
 };
