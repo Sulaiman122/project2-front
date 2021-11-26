@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
+import axios from "axios";
 
 const Game3 = () => {
   const squr = useRef(null);
@@ -12,6 +13,21 @@ const Game3 = () => {
   const [message, setMessage] = useState("");
   const [Q, setQ] = useState("");
   const [ccc, setccc] = useState(1);
+
+  const [show, setshow] = useState();
+  const [show3, setshow3] = useState("hide");
+  const [show2, setshow2] = useState("hide");
+
+  const setScore = async (passedScore, em) => {
+    try {
+      const resp = await axios.post("http://localhost:4500/setscore", {
+        email: em,
+        score: passedScore,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const startGame = (level) => {
     if (rounds >= 0) {
@@ -44,10 +60,7 @@ const Game3 = () => {
         "click",
         function () {
           console.log(rounds, "   score:", score);
-          if (rounds <= 0) {
-            setshow3("");
-            setshow2("hide");
-          }
+
           if (this.style.backgroundColor == question) {
             score += 1;
             container.style.backgroundColor = question;
@@ -55,15 +68,26 @@ const Game3 = () => {
             setTimeout(() => {
               startGame(level);
             }, 1000);
+            rounds = rounds + 1;
           } else {
-            setrounds(rounds);
             rounds = rounds - 1;
+            setrounds(rounds);
             setMessage("Wrong");
+            if (rounds <= 0) {
+              setshow3("");
+              setshow2("hide");
+              let myuser = JSON.parse(localStorage.getItem("User"));
+              if (myuser.score[2] < score * 3) {
+                myuser.score.splice(2, 1, score * 3);
+                localStorage.setItem("User", JSON.stringify(myuser));
+                setScore(myuser.score, myuser.email);
+              }
+            }
           }
         },
         { once: true }
       );
-      setccc(score);
+      setccc(score * 3);
     }
   };
   const restart = () => {
@@ -80,9 +104,6 @@ const Game3 = () => {
     }
   }, [seconds]);
 
-  const [show, setshow] = useState();
-  const [show3, setshow3] = useState("hide");
-  const [show2, setshow2] = useState("hide");
   return (
     <div className="game3" ref={cont}>
       <div className={`page2 ${show2}`}>
@@ -110,7 +131,7 @@ const Game3 = () => {
       </div>
       <div className={`page3 ${show3}`}>
         <h1>Result</h1>
-        <h1>Your Score is 5/{ccc}</h1>
+        <h1>Your Score is {ccc}</h1>
         <button onClick={restart}>Restart</button>
         <Link to="/">
           <button>go home</button>

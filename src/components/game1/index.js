@@ -94,11 +94,12 @@ const Game1 = () => {
     } else {
       console.log("didnt render");
     }
-    if (player.x == 0 && player.y == 9) {
+    if (player.x == 1 && player.y == 9) {
       console.log("won");
       let myuser = JSON.parse(localStorage.getItem("User"));
       myuser.score.splice(0, 1, timer / 2);
-      console.log(myuser.score);
+      console.log(myuser);
+      localStorage.setItem("User", JSON.stringify(myuser));
       setScore(myuser.score, myuser.email);
     }
   }

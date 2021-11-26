@@ -9,6 +9,7 @@ import Error from './components/error'
 import Login from './components/login'
 import Register from './components/register'
 import AllGames from './components/all_games'
+import Profile from './components/profile'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/game_three" element={<Game3/>}/>
         <Route exact path="/game_four" element={<Game4/>}/>
         <Route exact path="/games" element={<AllGames/>}/>
+        <Route exact path="/profile" element={<Profile/>}/>
         <Route path='*' element={<Error/>} />
       </Routes>
     </div>

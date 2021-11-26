@@ -24,7 +24,6 @@ const Game2 = () => {
   ];
   let imagination = ["", "", "", "", "", "", "", "", ""];
 
-
   const setScore = async (passedScore, em) => {
     try {
       const resp = await axios.post("http://localhost:4500/setscore", {
@@ -72,6 +71,7 @@ const Game2 = () => {
       }),
       currentTurn
     );
+    let myuser = JSON.parse(localStorage.getItem("User"));
 
     if (
       winLines.some((combinations) => {
@@ -80,28 +80,32 @@ const Game2 = () => {
         });
       })
     ) {
-      let myuser = JSON.parse(localStorage.getItem("User"));
-      myuser.score.splice(1, 1, timer * 6);
       if (currentTurn == "x") {
-        // setScoreGame2(myuser.score[1]);
+        setScoreGame2(timer * 6);
         setResultMessage("You Win!");
         setShow("show");
         end = true;
-        setScore(myuser.score, myuser.email);
+        if (myuser.score[1] < timer * 6) {
+          myuser.score.splice(1, 1, timer * 6);
+          localStorage.setItem("User", JSON.stringify(myuser));
+          setScore(myuser.score, myuser.email);
+        }
       } else if (currentTurn == "o") {
-        // setScoreGame2(myuser.score[1]);
+        setScoreGame2(0);
         setResultMessage("Computer Win");
         setShow("show");
       }
     } else if (draw) {
-      // setScoreGame2(myuser.score[1]);
+      setScoreGame2(2);
       setResultMessage("Draw");
       setShow("show");
       end = true;
       let myuser = JSON.parse(localStorage.getItem("User"));
-
-      myuser.score.splice(1, 1, 1);
-      setScore(myuser.score, myuser.email);
+      if (myuser.score[1] < 2) {
+        myuser.score.splice(1, 1, 2);
+        localStorage.setItem("User", JSON.stringify(myuser));
+        setScore(myuser.score, myuser.email);
+      }
     } else {
       return true;
     }
@@ -130,7 +134,7 @@ const Game2 = () => {
 
   const Completionist = () => {
     if (!show) {
-      setScoreGame2(timer * 4);
+      setScoreGame2(0);
       setResultMessage("Lost by time");
       setShow("show");
     }

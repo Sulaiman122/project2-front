@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 const Home = () => {
-
   const [hide, sethide] = useState("hide");
   const [show, setshow] = useState("");
   useEffect(() => {
     if (localStorage.getItem("User")) {
       setshow("hide");
       sethide("");
+    }
+    if (localStorage.getItem("User")) {
+      console.log("current user: ", JSON.parse(localStorage.getItem("User")));
+    } else {
+      console.log("No user found");
     }
   }, []);
   const logout = () => {
@@ -30,6 +34,9 @@ const Home = () => {
               <button className={`${show}`}>Sign Up</button>
             </Link>
           </div>
+          <Link to="/profile">
+              <button className={`${hide}`}>Profile</button>
+            </Link>
           <button className={`${hide}`} onClick={logout}>
             Log out
           </button>
@@ -40,13 +47,14 @@ const Home = () => {
           Games
           <br />
           Unleashed
-          
         </p>
         <p className="p2">
           The Most Popular WordPress Themes In The World And The Ultimate Visual
           Page
         </p>
-        <Link to="/games"><button id="browse">Browse Games</button></Link>
+        <Link to="/games">
+          <button id="browse">Browse Games</button>
+        </Link>
       </div>
     </div>
   );
