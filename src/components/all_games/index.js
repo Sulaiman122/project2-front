@@ -1,5 +1,7 @@
-import React,{useState} from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
+import Header from '../header'
 
 const AllGames = () => {
   let navigate = useNavigate();
@@ -10,17 +12,51 @@ const AllGames = () => {
       alert("you have to log in first");
     }
   };
-  if(localStorage.getItem('User')){
-      console.log('current user: ', JSON.parse(localStorage.getItem("User")));
-  }else{
-      console.log("No user found");
-  }
+
+
   return (
-    <div>
-      <button onClick={() => nav("/game_one")}>Game 1</button>
-      <button onClick={() => nav("/game_two")}>Game 2</button>
-      <button onClick={() => nav("/game_three")}>Game 3</button>
-      <button onClick={() => nav("/game_four")}>Game 4</button>
+    <div className="allGames">
+      <Header />
+      <h1>Games</h1>
+
+      <div class="cards-list">
+        <div class="card 1" onClick={() => nav("/game_one")}>
+          <div class="card_image">
+            {" "}
+            <img src="https://andrewhawkes.github.io/codepen-assets/steam-game-cards/game_1.jpg" />{" "}
+          </div>
+          <div class="card_title title-white">
+            <p>Card Title</p>
+          </div>
+        </div>
+
+        <div class="card 2" onClick={() => nav("/game_two")}>
+          <div class="card_image">
+            <img src="https://andrewhawkes.github.io/codepen-assets/steam-game-cards/game_2.jpg" />
+          </div>
+          <div class="card_title title-white">
+            <p>Card Title</p>
+          </div>
+        </div>
+
+        <div class="card 3" onClick={() => nav("/game_three")}>
+          <div class="card_image">
+            <img src="https://andrewhawkes.github.io/codepen-assets/steam-game-cards/game_3.jpg" />
+          </div>
+          <div class="card_title">
+            <p>Card Title</p>
+          </div>
+        </div>
+
+        <div class="card 4" onClick={() => nav("/game_four")}>
+          <div class="card_image">
+            <img src="https://andrewhawkes.github.io/codepen-assets/steam-game-cards/game_4.jpg" />
+          </div>
+          <div class="card_title title-black">
+            <p>Card Title</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

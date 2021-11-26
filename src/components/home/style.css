@@ -13,40 +13,6 @@
     background-image: url('../../img/background.jpg');
 }
 
-.header{
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding-left: 30px;
-    color: white;
-    font-size: 1.5rem;
-    /* background: chartreuse; */
-    height: 15vh;
-    margin: 0;
-}
-.home button{
-    background: none;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-.logo{
-    right: 2%;
-    position: absolute;
-    display: flex;
-}
-.logo button{
-    font-size: 1.3rem;
-    margin: 0 10px;
-    height: 45px;
-}
-.signup button{
-    background: white;
-    width: 100px;
-    font-size: 1.3rem;
-    border-radius: 17px;
-    color: black
-}
 
 .homeContainer{
     /* background: red; */

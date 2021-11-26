@@ -143,18 +143,19 @@ useEffect(() => {
 
   return (
     <div>
-      <div onKeyDown={handleKeyDown} tabIndex="0" className="game1 ">
         <Countdown date={Date.now() + 40000} renderer={renderer}></Countdown>
+      <div onKeyDown={handleKeyDown} tabIndex="0" className="game1 ">
         <canvas
           ref={canvasRef}
           id="GameBoardCanvas"
           width="400px"
           height="400px"
         ></canvas>
+      </div>
+
         <Link to="/">
           <button>Go Home</button>
         </Link>
-      </div>
       <div className="ResultGame1">
         <div className="resultTextGame1">{resultMessage}</div>
         <button onClick={restart}>Restart</button>
