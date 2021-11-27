@@ -19,15 +19,15 @@ const Home = () => {
         <p className="p1">
           Games
           <br />
-          Unleashed
+          <span className='unleash'>Unleashed</span>
         </p>
         <p className="p2">
-          The Most Popular WordPress Themes In The World And The Ultimate Visual
-          Page
+          Are you ready for your next challenge?<br/>Explore and compete on the best games here and have fun
         </p>
         <Link to="/games">
           <button id="browse">Browse Games</button>
         </Link>
+        <img className="homeImage" src="https://pixner.net/begam/images/left-banner.png" alt="" />
       </div>
     </div>
   );

@@ -1,33 +1,21 @@
-.register{
-    width: 40%;
-    min-height: 80vh;
-    background: blue;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    position: absolute;
-    top: 10%;
-    left: 30%;
+
+#regBack{
+background-color: #4525D6;
+margin-top: 10px;
+border: 1px solid white
 }
-
-.register h1{
-    margin: 0;
-}
-
-
-
-
 
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
+.margintop{
+	margin-top: 20px;
+}
 
 
 .registerpage h1 {
 	font-weight: bold;
-	margin: 0;
+	margin-top: 10px;
 }
 
 .registerpage h2 {
@@ -54,9 +42,10 @@
 }
 
 .registerpage button {
+	cursor: pointer;
 	border-radius: 20px;
 	border: 1px solid #4cb3c5;
-	background-color: #4cb3c5;
+	background-color: #1D0F6B;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -103,13 +92,12 @@
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
 			0 10px 10px rgba(0,0,0,0.22);
-	/* position: relative; */
 	overflow: hidden;
-	width: 768px;
+	width: 50%;
 	max-width: 100%;
 	min-height: 480px;
     position: absolute;
-    top: 15%;
+    top: 25%;
     left: 25%;
 }
 
@@ -172,8 +160,8 @@
 }
 
 .overlay {
-	background: #5b9fdf;
-	background: linear-gradient(to right, #2ba0ff, #209aff);
+	background: #4525D6;
+	background: linear-gradient(to right, #4525D6, #1D0F6B);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -220,19 +208,4 @@
 
 .registerpage.right-panel-active .overlay-right {
 	transform: translateX(20%);
-}
-
-.social-container {
-	margin: 20px 0;
-}
-
-.social-container a {
-	border: 1px solid #DDDDDD;
-	border-radius: 50%;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0 5px;
-	height: 40px;
-	width: 40px;
 }

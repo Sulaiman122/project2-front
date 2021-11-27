@@ -1,0 +1,22 @@
+footer {
+  position:fixed;
+  bottom: 0;
+  background: rgb(43, 43, 43);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #eee;
+  height: 1.4rem;
+  width: 100%;
+  padding: 0.2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  z-index: 999;
+}
+
+
+footer .love {
+  color: #b10;
+  font-size: 1rem;
+  vertical-align: baseline;
+}

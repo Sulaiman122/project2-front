@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./style.css";
 import axios from "axios";
 import Countdown from "react-countdown";
+import Header from "../header";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
+import Footer from "../footer";
 
 const Game1 = () => {
-  const [resultMessage, setResultMessage] = useState("");
-  const [show, setShow] = useState("");
-  const [hide, setHide] = useState("show");
+  const navigate = useNavigate();
 
   const setScore = async (passedScore, em) => {
     try {
@@ -23,6 +24,7 @@ const Game1 = () => {
   const canvasRef = useRef(null);
   const [canvas, setcanvas] = useState();
   let timer;
+  let done = false;
   useEffect(() => {
     setcanvas(canvasRef.current);
   }, []);
@@ -94,18 +96,33 @@ const Game1 = () => {
     } else {
       console.log("didnt render");
     }
-    if (player.x == 1 && player.y == 9) {
-      console.log("won");
+    if (player.x == 0 && player.y == 9) {
+      done = true;
       let myuser = JSON.parse(localStorage.getItem("User"));
       myuser.score.splice(0, 1, timer / 2);
       console.log(myuser);
       localStorage.setItem("User", JSON.stringify(myuser));
       setScore(myuser.score, myuser.email);
+
+      Swal.fire({
+        icon: "success",
+        title: `Score : ${timer / 2}`,
+        showDenyButton: true,
+        confirmButtonText: "Play again",
+        denyButtonText: `Back`,
+        confirmButtonColor: "#3085d6",
+        denyButtonColor: "#e1e1e1",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          restart();
+        } else if (result.isDenied) {
+          navigate("/games");
+        }
+      });
     }
   }
-useEffect(() => {
-  
-}, [])
+  useEffect(() => {}, []);
   //Check to see if the new space is inside the board and not a wall
   function canMove(x, y) {
     return (
@@ -131,35 +148,139 @@ useEffect(() => {
   }
 
   draw();
-  
+
   const restart = () => {
     window.location.reload();
   };
 
   const renderer = ({ seconds, completed }) => {
     timer = seconds;
-    return <span>{seconds}</span>;
+    if (completed) {
+      Swal.fire({
+        icon: "error",
+        title: `Score : 0`,
+        showDenyButton: true,
+        confirmButtonText: "Play again",
+        denyButtonText: `Back`,
+        confirmButtonColor: "#3085d6",
+        denyButtonColor: "#e1e1e1",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          restart();
+        } else if (result.isDenied) {
+          navigate("/games");
+        }
+      });
+    }
+    if (done) {
+      return "Well Played";
+    } else {
+      return <span>{" " + seconds}</span>;
+    }
   };
 
+  const sendComment = async (e) => {
+    let myuser = JSON.parse(localStorage.getItem("User"));
+    e.preventDefault();
+    console.log(e.target.comment.value);
+    console.log(myuser.userName);
+    try {
+      const resp = await axios.post("http://localhost:4500/comment", {
+        game: 1,
+        comment: e.target.comment.value,
+        username: myuser.userName,
+      }).then(async()=>{
+        try {
+          const resp = await axios.post("http://localhost:4500/retrievecomment", {
+            game: 1,
+          });
+          console.log(resp.data);
+          setcommments(resp.data);
+          setNoComment(resp.data.length);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    e.target.comment.value=''
+  };
+
+  const [noComment, setNoComment] = useState(0);
+  const [commments, setcommments] = useState([]);
+  useEffect(async () => {
+    try {
+      const resp = await axios.post("http://localhost:4500/retrievecomment", {
+        game: 1,
+      });
+      console.log(resp.data);
+      setcommments(resp.data);
+      setNoComment(resp.data.length);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   return (
-    <div>
-        <Countdown date={Date.now() + 40000} renderer={renderer}></Countdown>
+    <div className="game1Container">
+      <Header />
+
       <div onKeyDown={handleKeyDown} tabIndex="0" className="game1 ">
-        <canvas
-          ref={canvasRef}
-          id="GameBoardCanvas"
-          width="400px"
-          height="400px"
-        ></canvas>
+        <p className="timer">
+          Time :
+          <Countdown date={Date.now() + 40000} renderer={renderer}></Countdown>
+        </p>
+
+        <canvas ref={canvasRef} width="400px" height="400px"></canvas>
       </div>
 
-        <Link to="/">
-          <button>Go Home</button>
-        </Link>
-      <div className="ResultGame1">
-        <div className="resultTextGame1">{resultMessage}</div>
-        <button onClick={restart}>Restart</button>
-      </div>
+      <form className="comments_form" onSubmit={sendComment}>
+        <div className="commentHead">
+          <h3>New Comment</h3>
+          <button type="submit">Submit</button>
+        </div>
+        <div className="commentTail">
+          <img
+            src="https://bootdey.com/img/Content/avatar/avatar1.png"
+            alt=""
+          />
+          <textarea
+            name="comment"
+            placeholder="Your message"
+            required
+            cols="55"
+            rows="8"
+          ></textarea>
+        </div>
+        <div className="numComment">
+          <h3>{noComment} Comments</h3>
+        </div>
+        {commments.map((comment, index) => {
+          return (
+            <div className="realComment" key={index}>
+              <hr />
+              <div className="realcommentRow">
+                <img
+                  src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                  alt=""
+                />
+                <div className="realcommentData">
+                  <h3>{comment.username}</h3>
+                  <p>{comment.comment}</p>
+                  <p className="dateP">
+                    {comment.createdAt.slice(0, 10)}{" "}
+                    {comment.createdAt.slice(11, 16)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </form>
+
+      <Footer />
     </div>
   );
 };

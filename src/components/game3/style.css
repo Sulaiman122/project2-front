@@ -1,12 +1,26 @@
- /* .game3 {
-    background-color: #232323;
-    margin: 0;
-    font-family: "Verdana", "Corbel";
-} */
+ .game3 {
+    height: 300vh;
+    width: 100%;
+    background-size: cover;
+    background-image: url('https://pixner.net/begam/images/banner-bg.png');
+}
 
-.container {
-    max-width: 600px;
+.game3Container{
+    background-color: #1d0f6b93;
+    border: 3px solid #4525D6;
+    width: 30%;
     margin: 0 auto;
+    height: 80vh;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.containerr {
+    max-width: 90%;
+    margin: 70px auto 0 auto;
     padding-top: 30px;
 }
 
@@ -19,63 +33,81 @@
     border-radius: 30px;
     transition: background 0.3s;
 }
-/*
-.game3 h1 {
-    color: white;
+
+.game3Container h1{
     text-align: center;
-    background-color: steelblue;
-    margin: 0;
-    padding: 40px 0;
-    font-weight: normal;
-}
-
-#stripe{
-    background: white;
-    height: 30px;
-    text-align: center;
-}
-
-.game3 button{
-    border: none;
-    height: 100%;
-    background-color: white;
-    color: steelblue;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1px;
-    font-size: inherit;
-    transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    outline: none;
-}
-
-.game3 button:hover{
-    color: white;
-    background-color: steelblue;
-    cursor: pointer;
-}
-
-
-
-
-.selected{
-    background-color: steelblue;
     color: white;
 }
-
-#colorDisplay{
-    text-transform: uppercase;
-    display: block;
-    margin: 5px 0;
-    font-size: 170%;
-}
-
-#message{
-    display: inline-block;
-    width: 20%;
-} */
-
 .hide{
     display: none;
+}
+
+.page3{
+    height: 50%;
+    /* margin: 0 auto; */
+}
+
+.game3banner{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    padding: 0 20px;
+}
+.page2{
+    height: 100%;
+    border-radius: 15px;
+}
+
+.question{
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+
+}
+.page3 button{
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+    padding: 7px;
+}
+.page1{
+    height: 30%;
+}
+.page1 button{
+    display: flex;
+    margin-top: 50px;
+}
+
+.fill {
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  width: 40%;
+  margin: 0 auto;
+  padding: 13px 50px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 2;
+}
+
+.fill::after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+}
+
+.fill:hover::after {
+  top: 0px;
+  left: 0px;
 }
