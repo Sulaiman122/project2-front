@@ -19,7 +19,7 @@ const Profile = () => {
       console.log(value);
       try {
         if (is == "password") {
-          axios.post("http://localhost:4500/change", {
+          axios.post("https://project2-games.herokuapp.com/change", {
             email: em,
             password: value,
             username: username,
@@ -30,7 +30,7 @@ const Profile = () => {
         } else if (is == "username") {
           console.log('username method');
           console.log(value);
-          axios.post("http://localhost:4500/change", {
+          axios.post("https://project2-games.herokuapp.com/change", {
             email: em,
             password: password,
             username: value,

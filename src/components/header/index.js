@@ -23,7 +23,7 @@ const Header = () => {
     e.preventDefault();
     try {
       const resp = await axios
-        .post("http://localhost:4500/login", {
+        .post("https://project2-games.herokuapp.com/login", {
           email: e.target.email.value,
           password: e.target.password.value,
         })

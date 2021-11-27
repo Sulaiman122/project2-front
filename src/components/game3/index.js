@@ -24,7 +24,7 @@ const Game3 = () => {
 
   const setScore = async (passedScore, em) => {
     try {
-      const resp = await axios.post("http://localhost:4500/setscore", {
+      const resp = await axios.post("https://project2-games.herokuapp.com/setscore", {
         email: em,
         score: passedScore,
       });
@@ -133,13 +133,13 @@ const Game3 = () => {
     console.log(e.target.comment.value);
     console.log(myuser.userName);
     try {
-      const resp = await axios.post("http://localhost:4500/comment", {
+      const resp = await axios.post("https://project2-games.herokuapp.com/comment", {
         game: 3,
         comment: e.target.comment.value,
         username: myuser.userName,
       }).then(async()=>{
         try {
-          const resp = await axios.post("http://localhost:4500/retrievecomment", {
+          const resp = await axios.post("https://project2-games.herokuapp.com/retrievecomment", {
             game: 3,
           });
           console.log(resp.data);
@@ -159,7 +159,7 @@ const Game3 = () => {
   const [commments, setcommments] = useState([]);
   useEffect(async () => {
     try {
-      const resp = await axios.post("http://localhost:4500/retrievecomment", {
+      const resp = await axios.post("https://project2-games.herokuapp.com/retrievecomment", {
         game: 3,
       });
       setcommments(resp.data);
